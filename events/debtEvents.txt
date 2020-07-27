@@ -11,7 +11,13 @@ country_event = {
 	
 	trigger = {
 		ai = yes
-		num_of_loans = 2
+		num_of_loans = 1                           ## <--- If in debt and at peace AI may start a loop of creating/disbanding 1K army
+		num_of_hired_mercenary_companies = 1       ## <---  
+		##
+		## I will not disband Mercs if at war.. ##
+		##  Consider a simple   
+		##         is_at_war = no
+		##
 		OR = {
 			is_at_war = no
 			AND = {
@@ -28,34 +34,16 @@ country_event = {
 
 	immediate = {
 		hidden_effect = {
-			every_owned_province = {
-				random_hired_mercenary_company = {
-					limit = {
-						location = {
-							owned_by = ROOT
-						}
-					}
-
-					PREV = {
-						kill_units = {
-							
-						}
-					}
-				}
-			}
-			random_hired_mercenary_company = {
-				limit = {
-					location = {
-						owned_by = ROOT
-					}
-				}
-				kill_units = {
-				}
+			random_hired_mercenary_company = {           ## <----  Pick a mercenary company..
+				save_event_target_as = disposable_mercs
 			}
 		}
 	}
 
 	option = {
 		name = "debtevent.1.a"
+		event_target:disposable_mercs = {                 ## <---- ... and get rid of them!
+			disband_mercenary_company = THIS
+		}
 	}
 }
